@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results - Shilohu Prayer Hall</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* Modern CSS Variables & Reset */
+        :root {
+            --primary-color: #1a237e;
+            /* Royal Blue */
+            --accent-color: #ffd700;
+            /* Gold */
+            --bg-color: #f5f7fa;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-light: #6b7280;
+            --success: #10b981;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Ambient Background Effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(26, 35, 126, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 40%);
+            z-index: -1;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 1rem 0.5rem;
+            /* Reduced padding */
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            /* Slightly smaller text */
+            color: var(--primary-color);
+            margin-bottom: 0.2rem;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 3rem 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .results-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color), #283593);
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.1) 50%, transparent 60%);
+            transform: translateX(-100%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .card-header h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .date-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.25rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            backdrop-filter: blur(4px);
+            display: inline-block;
+        }
+
+        /* Table/List Styles */
+        .member-list {
+            padding: 2rem;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-item:hover {
+            background-color: #f8fafc;
+            transform: translateX(5px);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .member-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .member-details h3 {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            margin-bottom: 0.2rem;
+        }
+
+        .member-details p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .grade {
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .grade.pass {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .grade.distinction {
+            background-color: rgba(255, 215, 0, 0.15);
+            color: #bfa100;
+        }
+
+        /* Search Box */
+        .search-container {
+            padding: 0 2rem;
+            margin-top: -1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-box-wrapper {
+            display: flex;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-md);
+            border-radius: 15px;
+            background: white;
+            padding: 0.5rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: none;
+            /* border-radius: 15px; */
+            /* box-shadow: var(--shadow-md); */
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .search-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            white-space: nowrap;
+        }
+
+        .search-btn:hover {
+            background-color: #283593;
+        }
+
+        /* .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+            transform: translateY(-2px);
+        } */
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 1rem 0.5rem;
+            }
+
+            .logo-img {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 0.5rem;
+            }
+
+            .logo-text {
+                font-size: 1.5rem;
+                margin-bottom: 0.1rem;
+            }
+
+            .subtitle {
+                font-size: 0.8rem;
+                letter-spacing: 1px;
+            }
+
+            .card-header {
+                padding: 1.25rem 1rem;
+            }
+
+            .card-header h2 {
+                font-size: 1.4rem;
+            }
+
+            .member-list {
+                padding: 0.5rem;
+            }
+
+            .result-item {
+                padding: 1rem;
+                flex-direction: row;
+                /* Keep row but allowing wrapping if needed, though row is usually better for this list */
+                gap: 0.5rem;
+            }
+
+            .avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .member-details h3 {
+                font-size: 1rem;
+            }
+
+            .member-details p {
+                font-size: 0.8rem;
+            }
+
+            .grade {
+                font-size: 0.9rem;
+                padding: 0.3rem 0.6rem;
+                min-width: 60px;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-img {
+            max-width: 150px;
+            height: 150px;
+            /* Ensure circular aspect ratio if image is rectangular */
+            object-fit: cover;
+            /* Crop to fit cleanly */
+            margin-bottom: 0.5rem;
+            border-radius: 50%;
+            border: 4px solid var(--accent-color);
+            box-shadow: 0 10px 25px rgba(26, 35, 126, 0.2);
+            animation: fadeInDown 1s ease-out, float 6s ease-in-out infinite;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        header .logo-text {
+            animation: fadeInDown 1s ease-out 0.3s backwards;
+        }
+
+        header .subtitle {
+            animation: fadeInDown 1s ease-out 0.6s backwards;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="https://lh3.googleusercontent.com/gps-cs-s/AG0ilSwmeyDO6p-1-tCLR1wLCWOqD3_wwPsIewHCxZMerqnTk56WRbB6dQjET__UPXRlBb_862qOxvjCMNEcMfDv0idz-xOmDtgY5MWDfd4i6r-FwcT7XTp0359YCwEL5aUdzdvCEzqVEXqb7azX=w408-h306-k-no"
+            alt="Shilohu Prayer Hall Logo" class="logo-img">
+        <h1 class="logo-text">SHILOHU PRAYER HALL</h1>
+        <p class="subtitle">latest update result released in 01/01/2026</p>
+    </header>
+    <main>
+        <div class="results-card">
+            <div class="card-header">
+                <h2>Official Results Release</h2>
+                <span class="date-badge" id="current-date">January 2026</span>
+            </div>
+            <div class="search-container">
+                <div class="search-box-wrapper">
+                    <input type="text" class="search-input"
+                        placeholder="Enter Member ID (e.g. CHURCH-YEAR-ROLL NO..)..." id="searchInput">
+                    <button id="searchButton" class="search-btn">Check Result</button>
+                </div>
+                <div id="errorMsg"
+                    style="display:none; color: red; text-align: center; margin-top: 1rem; font-weight: 500;"></div>
+            </div>
+            <div class="member-list" id="memberList">
+                <div class="result-item">
+                    <div class="member-info">
+                        <div class="avatar">AS</div>
+                        <div class="member-details">
+                            <h3>ANANDH SAGAR</h3>
+                            <p>ID: SPH-2026-001</p>
+                        </div>
+                    </div>
+                    <div class="grade distinction">FAILED</div>
+                </div>
+                <div class="result-item">
+                    <div class="member-info">
+                        <div class="avatar">AB</div>
+                        <div class="member-details">
+                            <h3>ANKAM BHAGATH</h3>
+                            <p>ID: SPH-2026-002</p>
+                        </div>
+                    </div>
+                    <div class="grade pass">5th 36.66% 055/150</div>
+                </div>
+                <div class="result-item">
+                    <div class="member-info">
+                        <div class="avatar">AS</div>
+                        <div class="member-details">
+                            <h3>ANKAM SHALEMRAJ</h3>
+                            <p>ID: SPH-2026-003</p>
+                        </div>
+                    </div>
+                    <div class="grade pass">1st 77.33% 116/150</div>
+                </div>
+                <div class="result-item">
+                    <div class="member-info">
+                        <div class="avatar">BP</div>
+                        <div class="member-details">
+                            <h3>BILLA PREM CHENDU</h3>
+                            <p>ID: SPH-2026-004</p>
+                        </div>
+                    </div>
+                    <div class="grade pass">4th 42% 063/150</div>
+                </div>
+                <div class="result-item">
+                    <div class="member-info">
+                        <div class="avatar">BS</div>
+                        <div class="member-details">
+                            <h3>BILLA SANTHOS</h3>
+                            <p>ID: SPH-2026-005</p>
+                        </div>
+                    </div>
+                    <div class="grade distinction">FAILED</div>
+                </div>
+                <div class="result-item">
+                    <div class="member-info">
+                        <div class="avatar">VL</div>
+                        <div class="member-details">
+                            <h3>VELPULA LAKSHMI</h3>
+                            <p>ID: SPH-2026-006</p>
+                        </div>
+                    </div>
+                    <div class="grade pass">3rd 40% 072/150</div>
+                </div>
+                <div class="result-item">
+                    <div class="member-info">
+                        <div class="avatar">VS</div>
+                        <div class="member-details">
+                            <h3>VELPULA SATHISH</h3>
+                            <p>ID: SPH-2026-007</p>
+                        </div>
+                    </div>
+                    <div class="grade pass">2nd 64.66% 097/150</div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Shilohu Prayer Hall. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Set current date
+        const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', dateOptions);
+
+        // Search Functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+        const memberList = document.getElementById('memberList');
+        const items = document.querySelectorAll('.result-item');
+        const errorMsg = document.getElementById('errorMsg');
+
+        // Initially hide all items
+        items.forEach(item => {
+            item.style.display = 'none';
+        });
+
+        function checkResult() {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            let found = false;
+
+            if (!searchTerm) {
+                alert("Please enter an ID or Name");
+                return;
+            }
+
+            // Hide previous results and errors
+            items.forEach(item => item.style.display = 'none');
+            errorMsg.style.display = 'none';
+
+            items.forEach(item => {
+                const name = item.querySelector('h3').textContent.toLowerCase();
+                const id = item.querySelector('p').textContent.toLowerCase().replace('id: ', '').trim();
+
+                // Check for strict ID match or close name match
+                if (id === searchTerm || name === searchTerm || name.includes(searchTerm)) {
+                    item.style.display = 'flex';
+                    // Re-trigger animation
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }, 100);
+                    found = true;
+                }
+            });
+
+            if (!found) {
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = "No result found for ID/Name: " + searchInput.value;
+            }
+        }
+
+        searchButton.addEventListener('click', checkResult);
+
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkResult();
+            }
+        });
+    </script>
+</body>
+
+</html>
